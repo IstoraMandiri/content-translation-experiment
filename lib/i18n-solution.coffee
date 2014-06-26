@@ -51,7 +51,6 @@ firstValue = (obj) -> if obj then obj[Object.keys(obj)[0]]
             delete doc.i18n
           return doc
 
-    # TODO Replace Session.get with tapi18n
     Deps.autorun ->
       Meteor.subscribe name
       Meteor.subscribe "#{name}_i18n", TAPi18n.getLanguage()
