@@ -1,0 +1,14 @@
+<head>
+  <title>lang-problem</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{#each bios}}
+    <p>{{name}} - {{title}}</p>
+  {{/each}}
+</template>
