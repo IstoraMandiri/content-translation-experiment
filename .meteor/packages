@@ -6,3 +6,6 @@
 standard-app-packages
 coffeescript
 collection-hooks
+tap-i18n
+tap-i18n-ui
+bootstrap-3
