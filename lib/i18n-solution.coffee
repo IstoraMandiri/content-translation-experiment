@@ -11,7 +11,8 @@ firstValue = (obj) -> if obj then obj[Object.keys(obj)[0]]
     defaultPub = (fields) ->
       # return everything except i18n + field blacklist
       opts = _.clone options
-      opts['fields'] = { i18n : 0 }
+      opts.fields?= {}
+      opts.fields.i18n = 0
       Meteor.publish name, -> collection.find(query,opts)
 
     i18nPub = (fields) ->
@@ -19,7 +20,7 @@ firstValue = (obj) -> if obj then obj[Object.keys(obj)[0]]
       Meteor.publish "#{name}_i18n", (tag) ->
         # this is we could add fields option query 1
         opts = _.clone options
-        opts.fields = {}
+        opts.fields?= {}
         opts.fields["i18n.#{tag}"] = 1
         collection.find(query,opts)
 
