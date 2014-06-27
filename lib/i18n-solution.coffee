@@ -3,7 +3,7 @@ firstValue = (obj) -> if obj then obj[Object.keys(obj)[0]]
 
 @i18n_db =
 
-  publish : (name, collection, query={}, options={}) ->
+  publish : (name, collection, query={}, options={}, test) ->
     # mongo can only have a field whitelist or blacklist
     # detect and pass to the relvent function
     # this will ensure all field queries can be satisfied
@@ -13,16 +13,19 @@ firstValue = (obj) -> if obj then obj[Object.keys(obj)[0]]
       opts = _.clone options
       opts.fields?= {}
       opts.fields.i18n = 0
-      Meteor.publish name, -> collection.find(query,opts)
+      Meteor.publish name, ->
+        if test()
+          collection.find(query,opts)
 
     i18nPub = (fields) ->
       # return only relavent i18n + field whitelist
       Meteor.publish "#{name}_i18n", (tag) ->
-        # this is we could add fields option query 1
-        opts = _.clone options
-        opts.fields?= {}
-        opts.fields["i18n.#{tag}"] = 1
-        collection.find(query,opts)
+        if test()
+          # this is we could add fields option query 1
+          opts = _.clone options
+          opts.fields?= {}
+          opts.fields["i18n.#{tag}"] = 1
+          collection.find(query,opts)
 
     # enable all field queries
     fields = options.fields
